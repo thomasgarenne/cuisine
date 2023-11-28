@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . "/../lib/secret.php";
 
-/* LOCAL 
+/*
 define("DOMAIN", "localhost");
 define("DB_SERVER", "localhost");
 define("DB_NAME", "cook");

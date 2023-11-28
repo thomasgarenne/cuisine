@@ -1,6 +1,5 @@
 <?php
-
-/* LOCAL
+/*
 try {
     $pdo = new PDO('mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -9,13 +8,15 @@ try {
 }
 */
 
-$url = getenv('JAWSDB_URL');
+$url = JAWSDB_URL;
+
 $dbparts = parse_url($url);
 
 $hostname = $dbparts['host'];
 $username = $dbparts['user'];
 $password = $dbparts['pass'];
 $database = ltrim($dbparts['path'], '/');
+
 
 try {
     $conn = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);
