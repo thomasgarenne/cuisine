@@ -1,11 +1,4 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../.env';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-
-$dotenv->load();
-
 $domain = getenv('DOMAIN');
 
 // Remplacer "domain" par DOMAIN en local et "secure" sur false
