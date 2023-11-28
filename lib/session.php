@@ -1,9 +1,20 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../.env';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+
+$dotenv->load();
+
+$domain = getenv('DOMAIN');
+
+// Remplacer "domain" par DOMAIN en local et "secure" sur false
+
 session_set_cookie_params([
     "lifetime" => 3600,
     "path" => "/",
-    "domain" => DOMAIN,
-    "secure" => false,
+    "domain" => $domain,
+    "secure" => true,
     "httponly" => true
 
 ]);
