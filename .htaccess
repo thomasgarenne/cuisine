@@ -1,0 +1,6 @@
+RewriteEngine on
+RewriteBase /cook/
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+ErrorDocument 404 /notFound.php
