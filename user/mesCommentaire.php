@@ -28,12 +28,13 @@ $myComments = getComByUser($pdo, $user["id"]);
 				<li><?= $mc["notes"] ?> / 5</li>
 				<li>
 					<div>
-						<button class="btn-edit">
-							<a href="/admin/commentaires/editCommentaire.php?userId=<?= $mc['userId'] ?>&recetteId=<?= $mc['recetteId'] ?>">Modifier</a>
-						</button>
-						<button class="btn-delete">
-							<a href="/admin/commentaires/deleteCommentaire.php?userId=<?= $mc['userId'] ?>&recetteId=<?= $mc['recetteId'] ?>">Supprimer</a>
-						</button>
+						<a href="/admin/commentaires/editCommentaire.php?userId=<?= $mc['userId'] ?>&recetteId=<?= $mc['recetteId'] ?>">
+							<button class="btn-edit">Modifier</button>
+						</a>
+						<a href="/admin/commentaires/deleteCommentaire.php?userId=<?= $mc['userId'] ?>&recetteId=<?= $mc['recetteId'] ?>">
+							<button class="btn-delete">Supprimer</button>
+						</a>
+
 					</div>
 				</li>
 			<?php } ?>

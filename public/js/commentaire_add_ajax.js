@@ -19,7 +19,7 @@ const form = document.querySelector('form');
         const username = document.querySelector('#username').getAttribute('data-username');
         
         //Base de notre url de notre script php
-        const baseUrl = 'http://localhost:8000/admin/commentaires/addCommentaire.php';
+        const baseUrl = '/admin/commentaires/addCommentaire.php';
 
         const url = new URL(baseUrl);
     

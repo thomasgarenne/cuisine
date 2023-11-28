@@ -5,7 +5,7 @@ form.addEventListener('submit', async (e) => {
     const data = new FormData(form);
 
     // Base de l'URL de votre script PHP
-    const baseUrl = 'http://localhost:8000/admin/commentaires/editCommentaireAjax.php';
+    const baseUrl = '/admin/commentaires/editCommentaireAjax.php';
 
     // Créez une instance d'URL avec l'URL de base
     const url = new URL(baseUrl);

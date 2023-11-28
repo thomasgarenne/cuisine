@@ -54,7 +54,7 @@
         <input type="file" name="upload" id="upload">
     </fieldset>
 
-    <input type="submit" name="saveRecettes" value="Ajouter">
+    <button type="submit" name="saveRecettes">Ajouter</button>
 </form>
 
 <a href="<?= PREVIUS ?>"><button>Retour</button></a>

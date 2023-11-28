@@ -253,9 +253,9 @@ img {
 }
 
 .block {
-    margin: auto;
+    margin: 10px auto;
     width: 400px;
-    padding: 20px;
+    padding: 0px;
     border-bottom: 1px solid black;
 }
 
@@ -426,35 +426,84 @@ img {
     .flex {
         flex-direction: column;
     }
-
+    
     .recette {
         min-width: 400px;
     }
 
-    img {
-        width: 300px;
+    .col-bet img {
+        width: 450px;
         margin: 10px auto;
     }
-
+    
+    .col-bet div {
+        width: 450px;
+    }
+    
     .hidden {
         display: none;
     }
-
+    
     .sidebar {
         width: 80px;
     }
-
+    
     .sidebar .avatarContainer, h4, span {
         display: none;
     }
-
+    
     .sidebar .side li {
         padding: 20px 0;
         width: auto;
     }
-
+    
     .content {
         margin-left: 80px;
+        padding-top: 90px;
+    }
+    
+}
+
+@media screen and (max-width: 600px) {
+    .recette {
+        min-width: 300px;
+    }
+    .col-bet {
+        padding-top: 0;
+        width: 370px;
+    }
+
+    .col-bet img {
+        width: 340px;
+        margin: 10px;
+    }
+
+    .col-bet div {
+        width: 340px;
+    }
+
+    .presentation {
+        width: 370px;
+    }
+
+    .container {
+        padding-top: 70px;
+    }
+
+    .content {
+        padding: 0;
+        padding-top: 90px;
+        margin-left: 70px;
+    }
+
+    .block {
+        width: 280px;
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 60px;
+        padding: 100px 10px;
     }
 
 }
