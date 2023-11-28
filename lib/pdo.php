@@ -1,4 +1,9 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 /*
 try {
     $pdo = new PDO('mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
@@ -8,7 +13,7 @@ try {
 }
 */
 
-$url = JAWSDB_URL;
+$url = getenv('JAWSDB_URL');
 
 $dbparts = parse_url($url);
 
