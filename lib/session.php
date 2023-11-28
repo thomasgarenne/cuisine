@@ -25,7 +25,7 @@ function adminOnly()
 {
     if (!isset($_SESSION["user"])) {
         header('Location: ../login.php');
-    } elseif ($_SESSION["user"]["role"] !== '["ROLE_ADMIN"]') {
+    } elseif ($_SESSION["user"]["role"] !== ["ROLE_ADMIN"]) {
         header('Location: ../index.php');
     }
 }

@@ -16,7 +16,7 @@ if (isset($_POST["email"]) && !is_null($_POST["email"])) {
         session_regenerate_id(true);
         $_SESSION["user"] = $user;
 
-        if ($user["role"] === '["ROLE_ADMIN"]') {
+        if ($user["role"] === ["ROLE_ADMIN"]) {
             header("Location: /admin/index.php");
             exit();
         } elseif ($user["role"] === '["ROLE_USER"]') {
