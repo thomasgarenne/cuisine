@@ -14,7 +14,16 @@ require_once __DIR__ . "/../admin/templates/header.php";
 $user = $_SESSION['user'];
 $users = showUser($pdo, $user["id"]);
 
-$myComments = getComByUser($pdo, $user["id"]);
+$nbItem = countCommentaireByUser($pdo, $user["id"]);
+echo $nbItem;
+
+//Définir la base de l'url pour la pagination
+$url = "./mesCommentaire.php";
+
+require_once __DIR__ . "/../lib/pagination.php";
+
+//$myComments = getComByUser($pdo, $user["id"]);
+$myComments = getComByUserPage($pdo, $user["id"], $premier, $parPage);
 ?>
 
 <?php require_once __DIR__ . "/../templates/account_sidebar.php"; ?>
@@ -40,4 +49,5 @@ $myComments = getComByUser($pdo, $user["id"]);
 			<?php } ?>
 		</ul>
 	</div>
+	<?= require_once __DIR__ . "/../templates/pagination.php" ?>
 </div>

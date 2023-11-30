@@ -4,7 +4,10 @@ require_once __DIR__ . "/lib/config.php";
 
 use \Mailjet\Resources;
 
-$mj = new \Mailjet\Client(API_USER, API_LOGIN, true, ['version' => 'v3.1']);
+$user = getenv('API_USER');
+$login = getenv('API_LOGIN');
+
+$mj = new \Mailjet\Client($user, $login, true, ['version' => 'v3.1']);
 
 if (!empty($_POST["email"]) && !empty($_POST["message"])) {
 	$email = htmlentities($_POST["email"]);

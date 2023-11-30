@@ -5,26 +5,15 @@ form.addEventListener('submit', async (e) => {
     const data = new FormData(form);
 
     // Base de l'URL de votre script PHP
-    const baseUrl = '/admin/commentaires/editCommentaireAjax.php';
-
-    // Créez une instance d'URL avec l'URL de base
-    const url = new URL(baseUrl);
-
-    // Ajoutez les valeurs à l'URL en utilisant append
-    data.forEach((value, key) => {
-        url.searchParams.append(key, value);
-    });
-
-    // Convertissez l'URL en chaîne
-    const urlParams = url.toString();
-    console.log(urlParams);
+    const baseUrl = "/admin/commentaires/editCommentaireAjax.php";
 
     try {
-        const response = await fetch(urlParams, {
-            method: 'PATCH',
+        const response = await fetch(baseUrl, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
-            }
+            },
+            body: data
         });
 
         if (!response.ok) {

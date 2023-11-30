@@ -1,6 +1,6 @@
 const form = document.querySelector('form');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         //Création d'élément DOM
@@ -10,62 +10,49 @@ const form = document.querySelector('form');
         const c = document.createElement('li');
         const n = document.createElement('li');
         const d = document.createElement('li');
-        
-        // On récupère les valeurs du formulaire
-        const comment = document.querySelector('#commentaire').value;
-        const notes = document.querySelector('#notes').value;
-        const userId = document.querySelector('#userId').getAttribute('data-author');
-        const recetteId = document.querySelector('#recetteId').getAttribute('data-recette');
-        const username = document.querySelector('#username').getAttribute('data-username');
-        
-        //Base de notre url de notre script php
-        const baseUrl = '/admin/commentaires/addCommentaire.php';
 
-        const url = new URL(baseUrl);
-    
-        //On ajoute les valeurs avec leur clé à l'url
-        url.searchParams.append("comment", comment);
-        url.searchParams.append("notes", notes);
-        url.searchParams.append("userId", userId);
-        url.searchParams.append("recetteId", recetteId);
-        url.searchParams.append("username", username);
+        //URL + DATA
+        const data = new FormData(form);
+        const baseURL = "/admin/commentaires/addCommentaire.php";
 
-        const urlParams = url.toString();
+        try {
+            const response = await fetch(baseURL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                body: data
+            });
 
-        fetch(urlParams, {
-
-        })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error("L'ajout a échoué");
+            if (!response.ok) {
+                throw new Error("Une erreur est survenue");
             }
-            return res.json();
-        })
-        .then(result => {
-            if (result.success === true) {
+
+            const result = await response.json();
+
+            if (result.success) {
+                console.log(result.success);
                 showFlashMessage(result.message, 3000);
-                console.log(result.message);
+
+                // Ajouter valeur au DOM
                 a.textContent = 'Nom : ' + result.u;
                 c.textContent = 'Commentaire : ' + result.c;
                 n.textContent = 'Notes : ' + result.n;
                 d.textContent = 'Date : ' + result.d;
 
-                //Ajout des li à ul
                 ul.appendChild(a);
                 ul.appendChild(c);
                 ul.appendChild(n);
                 ul.appendChild(d);
-
-                //Ajout ul à com
+               
                 com.prepend(ul);
 
-                //Réinitialise le form
                 form.reset();
             } else {
-
-                showFlashMessage(result.message, 3000);
                 console.log(result.message);
             }
-        })
-        .catch(e => console.error(e));
+        } catch (error) {
+            console.error(error);
+            showFlashMessage(error, 3000);
+        }
     });

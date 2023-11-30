@@ -14,7 +14,11 @@ require_once __DIR__ . "/../admin/templates/header.php";
 $user = $_SESSION['user'];
 $users = showUser($pdo, $user["id"]);
 
-$favories = favories($pdo, $user["id"]);
+$url = "/coupDeCoeur";
+$fav = favories($pdo, $user["id"]);
+$nbItems = count($fav);
+require_once __DIR__ . "/../lib/pagination.php";
+$favories = favoriesPaginated($pdo, $user["id"], $premier, $parPage);
 ?>
 
 <?php require_once __DIR__ . "/../templates/account_sidebar.php"; ?>
@@ -32,6 +36,9 @@ $favories = favories($pdo, $user["id"]);
 		</div>
 	<?php } ?>
 </div>
+
+<?php require_once __DIR__ . "/../templates/pagination.php"; ?>
+
 <script src="/public/js/flash_message.js"></script>
 <script src=/public/js/likes/likes.js></script>
 <?php

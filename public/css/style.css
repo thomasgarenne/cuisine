@@ -180,6 +180,35 @@ img {
     margin: 1px;
 }
 
+/** PAGINATION **/
+.pagination {
+    width: 100%;
+} 
+
+.pagination .pagination-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.pagination .pagination-list a{
+    color: #333;
+}
+
+.pagination .pagination-list a:hover{
+    color: #78b1b1;
+}
+
+.current{
+    color: #78b1b1 !important;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
 /** PRESENTATION RECETTE **/
 .presentation {
     width: 500px;

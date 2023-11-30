@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/lib/config.php";
 require_once __DIR__ . "/lib/pdo.php";
+require_once __DIR__ . "/lib/validation.php";
 require_once __DIR__ . "/lib/recettes.php";
 require_once __DIR__ . "/lib/commentaires.php";
 require_once __DIR__ . "/lib/ingredientRecette.php";
@@ -63,6 +64,30 @@ if (isset($_SESSION['user'])) {
 } else {
     $form = false;
 }
+
+// Validation formulaire commentaire
+/*
+if (isset($_POST['commentaire'], $_POST["notes"], $_POST['userId'], $_POST['recetteId'], $_POST['username'])) {
+    $errors = [];
+
+    $commentaire = htmlentities($_POST['commentaire']);
+    $commentaireValidationResult = validateText('commentaire', $commentaire, 10, 200);
+    if ($commentaireValidationResult !== null) {
+        $errors[] = $commentaireValidationResult;
+    }
+
+    $notes = (int)$_POST['notes'];
+    $userId = (int)$_POST['userId'];
+    $recetteId = (int)$_POST['recetteId'];
+    $username = htmlentities($_POST['username']);
+
+    if (empty($errors)) {
+        addCommentaire($pdo, $commentaire, $notes, $userId, $recetteId);
+    } else {
+        echo $errors;
+    }
+}
+*/
 ?>
 
 <?php if (!$error) { ?>
@@ -125,7 +150,7 @@ if (isset($_SESSION['user'])) {
 
         <!-- Formulaire d'ajout d'un commentaire -->
         <?php if ($form) { ?>
-            <form method="get" name="commentaire">
+            <form method="POST" name="commentaire">
                 <fieldset>
                     <legend>Laissez un commentaire</legend>
                     <label for="notes">Notes</label>
@@ -139,9 +164,9 @@ if (isset($_SESSION['user'])) {
                     <label for="commentaire">Commentaire</label>
                     <textarea name="commentaire" id="commentaire" cols="30" rows="10" placeholder="Votre commentaire" minlength="10" maxlength="200"></textarea>
 
-                    <input type="hidden" name="userId" id="userId" data-author="<?= $userId ?>">
-                    <input type="hidden" name="recetteId" id="recetteId" data-recette="<?= $id ?>">
-                    <input type="hidden" name="username" id="username" data-username="<?= $username ?>">
+                    <input type="hidden" name="userId" id="userId" value="<?= $userId ?>">
+                    <input type="hidden" name="recetteId" id="recetteId" value="<?= $id ?>">
+                    <input type="hidden" name="username" id="username" value="<?= $username ?>">
 
                     <button type="submit" name="saveCommentaire">Ajoutez</button>
                 </fieldset>

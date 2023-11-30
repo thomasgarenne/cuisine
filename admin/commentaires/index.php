@@ -24,7 +24,7 @@
                         <a href="/admin/commentaires/editCommentaire.php?userId=<?= $c['userId'] ?>&recetteId=<?= $c['recetteId'] ?>">
                             <button class="btn-edit">Modifier</button>
                         </a>
-                        <a href=" /admin/commentaires/deleteCommentaire.php?userId=<?= $c['userId'] ?>&recetteId=<?= $c['recetteId'] ?>">
+                        <a href="/admin/commentaires/deleteCommentaire.php?userId=<?= $c['userId'] ?>&recetteId=<?= $c['recetteId'] ?>">
                             <button class="btn-delete">Supprimer</button>
                         </a>
                     </div>

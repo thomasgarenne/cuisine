@@ -3,37 +3,51 @@
 /** CREATE */
 function addCommentaire(PDO $pdo, string $commentaire, int $notes, int $userId, int $recetteId, string $username)
 {
-    $datetime = new DateTime();
-    $createdAt = $datetime->format('Y/m/d h:i:s');
-
-    $sql = "INSERT INTO commentaire (commentaire, notes, createdAt, userId, recetteId) VALUES (:commentaire, :notes, :createdAt, :userId, :recetteId)";
-
+    $sql = "SELECT * FROM commentaire WHERE userId = :userId AND recetteId = :recetteId";
     $query = $pdo->prepare($sql);
-
-    $query->bindParam(':commentaire', $commentaire, PDO::PARAM_STR);
-    $query->bindParam(':notes', $notes, PDO::PARAM_INT);
-    $query->bindParam(':createdAt', $createdAt, PDO::PARAM_STR);
-    $query->bindParam(':userId', $userId, PDO::PARAM_INT);
     $query->bindParam(':recetteId', $recetteId, PDO::PARAM_INT);
+    $query->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $query->execute();
 
-    if ($query->execute()) {
-        $result = array(
-            "success" => true,
-            "message" => "Le commentaire a bien été ajouté",
-            "c" => html_entity_decode($commentaire),
-            "n" => $notes,
-            "d" => $createdAt,
-            "u" => $username,
-            "recetteId" => $recetteId
-        );
+    if ($query->rowCount() === 0) {
+        $datetime = new DateTime();
+        $createdAt = $datetime->format('Y-m-d h:i:s');
+
+        $sql = "INSERT INTO commentaire (commentaire, notes, createdAt, userId, recetteId) VALUES (:commentaire, :notes, :createdAt, :userId, :recetteId)";
+
+        $query = $pdo->prepare($sql);
+
+        $query->bindParam(':commentaire', $commentaire, PDO::PARAM_STR);
+        $query->bindParam(':notes', $notes, PDO::PARAM_INT);
+        $query->bindParam(':createdAt', $createdAt, PDO::PARAM_STR);
+        $query->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $query->bindParam(':recetteId', $recetteId, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            $result = [
+                "success" => true,
+                "message" => "Commentaire ajouté avec succès",
+                "c" => $commentaire,
+                "n" => $notes,
+                "u" => $username,
+                "d" => $createdAt
+            ];
+        } else {
+            $result = [
+                "success" => false,
+                "message" => "Erreur lors de l'ajout en BDD"
+            ];
+        }
+
+        echo json_encode($result);
     } else {
-        $result = array(
+        $result = [
             "success" => false,
-            "message" => "Une erreur est survenue"
-        );
-    }
+            "message" => "Vous avez déjà laissé un commentaire pour cette recette"
+        ];
 
-    echo json_encode($result);
+        echo json_encode($result);
+    }
 }
 
 /** READ */
@@ -90,6 +104,32 @@ function getComByUser(PDO $pdo, int $userId): array
     $query->execute();
 
     return $query->fetchAll();
+}
+
+function getComByUserPage(PDO $pdo, int $userId, int $start, int $limit): array
+{
+    $sql = "SELECT * FROM commentaire WHERE userId = :userId ORDER BY createdAt ASC LIMIT :start, :limit";
+
+    $query = $pdo->prepare($sql);
+    $query->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $query->bindParam(":start", $start, PDO::PARAM_INT);
+    $query->bindParam(":limit", $limit, PDO::PARAM_INT);
+    $query->execute();
+
+    return $query->fetchAll();
+}
+
+/** Pagination */
+function countCommentaireByUser(PDO $pdo, int $userId)
+{
+    $sql = "SELECT COUNT(*) as total FROM commentaire WHERE userId = :userId";
+
+    $query = $pdo->prepare($sql);
+    $query->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $query->execute();
+    $recettes = $query->fetch(PDO::FETCH_ASSOC);
+
+    return (int) $recettes['total'];
 }
 
 /** UPDATE */

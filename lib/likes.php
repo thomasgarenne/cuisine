@@ -68,3 +68,16 @@ function favories(PDO $pdo, int $userId): array
 
 	return $query->fetchAll();
 }
+
+function favoriesPaginated(PDO $pdo, int $userId, $start, $limit): array
+{
+	$sql = "SELECT * FROM likes INNER JOIN recette ON likes.recetteId = recette.id WHERE userId = :userId LIMIT :start, :limit";
+
+	$query = $pdo->prepare($sql);
+	$query->bindParam(':userId', $userId, PDO::PARAM_INT);
+	$query->bindParam(':start', $start, PDO::PARAM_INT);
+	$query->bindParam(':limit', $limit, PDO::PARAM_INT);
+	$query->execute();
+
+	return $query->fetchAll();
+}

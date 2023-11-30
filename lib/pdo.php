@@ -7,7 +7,6 @@ try {
     die('PDO ERREUR : ' . $e->getFile() . ' L ' . $e->getLine() . ' : ' . $e->getMessage());
 }
 */
-
 $url = getenv('JAWSDB_URL');
 
 $dbparts = parse_url($url);

@@ -3,7 +3,6 @@ const buttons = document.querySelectorAll('.btn-delete');
 buttons.forEach(b => {
     b.addEventListener('click', () => {
         let userId = b.getAttribute('data-userid');
-        console.log(userId);
         let recetteId = b.getAttribute('data-recetteid');
         let row = document.querySelector(`#id${userId}`);
         

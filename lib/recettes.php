@@ -1,30 +1,16 @@
 <?php
 
 /** INDEX */
-function getRecettes(PDO $pdo, int $limit = null, int $page = null): array
+function getRecettes(PDO $pdo, int $premier = null, int $limit = null): array
 {
-    $sql = "SELECT * FROM recette ORDER BY createdAt DESC";
-
-    if ($limit && !$page) {
-        $sql .= " LIMIT :limit";
-    }
-
-    if ($page) {
-        $sql .= " LIMIT :offset, :limit";
-    }
+    $sql = "SELECT * FROM recette ORDER BY createdAt DESC LIMIT :premier, :limit";
 
     $query = $pdo->prepare($sql);
-
-    if ($limit) {
-        $query->bindValue('limit', $limit, PDO::PARAM_INT);
-    }
-
-    if ($page) {
-        $offset = ($page - 1) * $limit;
-        $query->bindValue('offset', $offset, PDO::PARAM_INT);
-    }
+    $query->bindValue(':premier', $premier, PDO::PARAM_INT);
+    $query->bindValue(':limit', $limit, PDO::PARAM_INT);
 
     $query->execute();
+
     $recettes = $query->fetchAll();
 
     return $recettes;
@@ -173,5 +159,5 @@ function getTotalRecette(PDO $pdo)
     $query->execute();
     $recettes = $query->fetch(PDO::FETCH_ASSOC);
 
-    return $recettes;
+    return (int) $recettes['total'];
 }
